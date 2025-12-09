@@ -21,7 +21,7 @@ public class Comida extends Produto{
         return tipoCozinha;
     }
     public void setTipoCozinha(String tipoCozinha) {
-        this.tipoCozinha = tipoCozinha;
+        if (tipoCozinha != null && !tipoCozinha.trim().isEmpty()) this.tipoCozinha = tipoCozinha;
     }
 
     public boolean isVegetariano() {
