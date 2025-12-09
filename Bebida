@@ -18,7 +18,7 @@ public class Bebida extends Produto{
         return tamanhoMl;
     }
     public void setTamanhoMl(int tamanhoMl) {
-        this.tamanhoMl = tamanhoMl;
+        if (tamanhoMl > 0) this.tamanhoMl = tamanhoMl;
     }
 
     public boolean isAlcool() {
