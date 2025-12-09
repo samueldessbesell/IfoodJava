@@ -1,0 +1,5 @@
+public interface GerenciamentoProdutos {
+    void adicionarProduto(Produto p);
+    void removerProduto(String nome);
+    void listarProdutos();
+}
