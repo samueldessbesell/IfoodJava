@@ -1,0 +1,128 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App {
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Restaurante> restaurantes = new ArrayList<>();
+
+    public static void main(String[] args) throws Exception {
+        menuPrincipal();
+    }
+
+    //MENUS
+    public static void menuPrincipal() {
+        while (true) {
+            System.out.println("===== IFood Console =====");
+            System.out.println("1 - Dono do Restaurante");
+            System.out.println("2 - Cliente");
+            System.out.println("0 - Sair");
+            int opc = sc.nextInt(); sc.nextLine();
+
+            switch (opc) {
+                case 1 -> menuDono();
+                case 2 -> menuCliente();
+                case 0 -> { System.out.println("Saindo..."); return; }
+                default -> System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    //MENU DO DONO
+    public static void menuDono() {
+        System.out.println("Nome do restaurante: ");
+        String nome = sc.nextLine();
+
+        System.out.println("Endereço: ");
+        String endereco = sc.nextLine();
+
+        Restaurante r = new Restaurante(nome, endereco);
+        restaurantes.add(r);
+
+        while (true) {
+            System.out.println("--- Gerenciamento do Restaurante ---");
+            System.out.println("1 - Cadastrar Produto");
+            System.out.println("2 - Listar Produtos");
+            System.out.println("0 - Voltar");
+            int opc = sc.nextInt(); sc.nextLine();
+
+            if (opc == 0) break;
+
+            switch (opc) {
+                case 1 -> cadastrarProduto(r);
+                case 2 -> listarProdutos(r);
+            }
+        }
+    }
+
+    public static void cadastrarProduto(Restaurante r) {
+        System.out.println("1 - Comida | 2 - Bebida");
+        int tipo = sc.nextInt(); sc.nextLine();
+
+        System.out.println("Nome: "); String nome = sc.nextLine();
+        System.out.println("Descrição: "); String descricao = sc.nextLine();
+        System.out.println("Preço: "); double preco = sc.nextDouble();
+        System.out.println("Tempo de preparo (min): "); int tempoPreparo = sc.nextInt(); sc.nextLine();
+
+        if (tipo == 1) {
+            System.out.println("Tipo de cozinha: "); String tipoCozinha = sc.nextLine();
+            System.out.println("Vegetariano? (1 sim / 0 não): "); boolean vegetariano = sc.nextInt() == 1;
+            System.out.println("Vegano? (1 sim / 0 não): "); boolean vegano = sc.nextInt() == 1;
+            r.adicionarProduto(new Comida(nome, descricao, preco, tempoPreparo, tipoCozinha, vegetariano, vegano));
+        } else {
+            System.out.println("Volume (ml): "); int vol = sc.nextInt();
+            System.out.println("Alcoólica? (1 sim / 0 não): "); boolean alc = sc.nextInt() == 1;
+            r.adicionarProduto(new Bebida(nome, descricao, preco, tempoPreparo, vol, alc));
+        }
+    }
+
+    public static void listarProdutos(Restaurante r) {
+        System.out.println("--- Produtos ---");
+        for (Produto p : r.getProdutos()) {
+            System.out.println(p.detalhar());
+        }
+    }
+
+    //MENU DO CLIENTE
+    public static void menuCliente() {
+        if (restaurantes.isEmpty()) {
+            System.out.println("Nenhum restaurante cadastrado.");
+            return;
+        }
+
+        System.out.println("--- Restaurantes ---");
+        for (int i = 0; i < restaurantes.size(); i++) {
+            System.out.println((i + 1) + " - " + restaurantes.get(i));
+        }
+
+        System.out.println("Escolha: ");
+        int escolha = sc.nextInt() - 1;
+
+        if (escolha < 0 || escolha >= restaurantes.size()) return;
+        Restaurante r = restaurantes.get(escolha);
+
+        double total = 0;
+        int tempoTotal = 0;
+
+        while (true) {
+            System.out.println("--- Cardápio ---");
+            ArrayList<Produto> produtos = r.getProdutos();
+
+            for (int i = 0; i < produtos.size(); i++) {
+                System.out.println((i + 1) + " - " + produtos.get(i).detalhar());
+            }
+
+            System.out.println("0 - Finalizar pedido");
+            int op = sc.nextInt();
+
+            if (op == 0) break;
+            if (op - 1 < 0 || op - 1 >= produtos.size()) continue;
+
+            Produto p = produtos.get(op - 1);
+            total += p.getPreco();
+            tempoTotal += p.getTempoPreparo();
+        }
+
+        System.out.println("Total do pedido: R$" + total);
+        System.out.println("Tempo estimado: " + tempoTotal + " min");
+    }
+}
