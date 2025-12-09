@@ -1,0 +1,15 @@
+public class Dono extends Usuario{
+    private Restaurante restaurante;
+
+    public Dono(String nome) {
+        super(nome);
+    }
+
+    //Getters & Setters
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
+    }
+}
