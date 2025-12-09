@@ -1,0 +1,40 @@
+public class Comida extends Produto{
+    private String tipoCozinha;
+    private boolean vegetariano;
+    private boolean vegano;
+
+    public Comida(String nome, String descricao, double preco, int tempoPreparo,
+                  String tipoCozinha, boolean vegetariano, boolean vegano) {
+        super(nome, descricao, preco, tempoPreparo);
+        setTipoCozinha(tipoCozinha);
+        setVegetariano(vegetariano);
+        setVegano(vegano);
+    }
+
+    @Override
+    public String detalhar() {
+        return getNome() + " | R$" + getPreco() + " | " + tipoCozinha + " | Vegetariano: " + vegetariano + " | Vegano: " + vegano;
+    }
+
+    //Getters & Setters
+    public String getTipoCozinha() {
+        return tipoCozinha;
+    }
+    public void setTipoCozinha(String tipoCozinha) {
+        this.tipoCozinha = tipoCozinha;
+    }
+
+    public boolean isVegetariano() {
+        return vegetariano;
+    }
+    public void setVegetariano(boolean vegetariano) {
+        this.vegetariano = vegetariano;
+    }
+
+    public boolean isVegano() {
+        return vegano;
+    }
+    public void setVegano(boolean vegano) {
+        this.vegano = vegano;
+    }
+}
