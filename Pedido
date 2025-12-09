@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+
+public class Pedido {
+    private Cliente cliente;
+    private ArrayList<Produto> produtos;
+
+    public Pedido(Cliente cliente) {
+        setCliente(cliente);
+        setProdutos(produtos);
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public double calcularTotal() {
+        double total = 0;
+        for (Produto produto : produtos) {
+            total += produto.getPreco();
+        }
+        return total;
+    }
+
+    public int calcularTempoTotal() {
+        int total = 0;
+        for (Produto produto : produtos) {
+            total += produto.getTempoPreparo();
+        }
+        return total;
+    }
+
+    //Getters & Setters
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(ArrayList<Produto> produtos) {
+        this.produtos = new ArrayList<>();
+    }
+}
